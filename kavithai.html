@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+}
+
+/* Play Button */
+.play-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff4d6d, #ff758c);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,77,109,0.8);
+}
+
+/* Poem */
+.poem {
+    opacity: 0;
+    font-size: 22px;
+    line-height: 1.8;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+/* Lines */
+.line {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* 🔥 Highlight last line */
+.highlight {
+    color: #ff9acb;
+    font-weight: bold;
+    font-size: 23px;
+    text-shadow: 0 0 10px #f66f88, 0 0 20px #ff4d6d;
+}
+
+/* Next button */
+.next-btn {
+    opacity: 0;
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #ff4d6d, #ff758c);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,77,109,0.8);
+}
+
+.next-btn:hover {
+    transform: scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔊 Music -->
+<audio id="music" preload="auto">
+    <source src="kavi.mpeg" type="audio/mpeg">
+</audio>
+
+<div id="container">
+    <button class="play-btn" onclick="startExperience()">▶ Start Kavya 💖</button>
+</div>
+
+<script>
+function startExperience() {
+
+    let music = document.getElementById("music");
+    music.volume = 0.4;
+    music.currentTime = 0;
+    music.play().catch(() => {});
+
+    setTimeout(() => {
+
+        document.getElementById("container").innerHTML = `
+        <div class="poem" id="poem">
+            <div class="line">மை பூசாத கண்கள்</div>
+            <div class="line">என்னை மெதுவாக மயக்கத்தில் மூழ்கடித்தது…</div>
+
+            <div class="line">சாயம் பூசாத உதடுகள்</div>
+            <div class="line">சொல்லாமலே சுகமான சுவையை சேர்த்தது…</div>
+
+            <div class="line">பத்து விரல்கள்</div>
+            <div class="line">பருகாத பாசத்தை பரவசமாய் பரப்புது…</div>
+
+            <div class="line">உன் கால்களை மட்டும் நான் சொல்லவில்லையேன்னு கேட்கிறாயா?</div>
+
+            <div class="line highlight">
+                தேவதைகளுக்கு ஏதடி கால்கள்…என் மனதில் இருக்கும் உனக்கு… ❤️
+            </div>
+
+            <button class="next-btn" onclick="goNext()" id="nextBtn">
+                Next paaru Kavya… 💖
+            </button>
+        </div>
+        `;
+
+        // show poem
+        let poem = document.getElementById("poem");
+        poem.style.transition = "1s";
+        poem.style.opacity = "1";
+
+        // animate lines
+        let lines = document.querySelectorAll(".line");
+
+        lines.forEach((line, i) => {
+            setTimeout(() => {
+                line.style.transition = "1s";
+                line.style.opacity = "1";
+                line.style.transform = "translateY(0)";
+            }, i * 1500);
+        });
+
+        // show button
+        setTimeout(() => {
+            let btn = document.getElementById("nextBtn");
+            btn.style.transition = "1s";
+            btn.style.opacity = "1";
+        }, lines.length * 1500);
+
+    }, 200);
+}
+
+function goNext(){
+    window.location.href = "video.html";
+}
+</script>
+
+</body>
+</html>

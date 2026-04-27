@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting Card</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, #56a7e4, #9e1f85);
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        /* HEARTS */
+        .heart {
+            position: absolute;
+            font-size: 18px;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); }
+            100% { transform: translateY(-10vh) scale(1); }
+        }
+
+        /* FLOWERS */
+        .flower {
+            position: absolute;
+            top: -10vh;
+            font-size: 15px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* NAME POPUP */
+        .name-popup {
+            position: fixed;
+            top: 40%;
+            width: 90%;
+            text-align: center;
+            font-size: 30px;
+            color: rgb(245, 245, 245);
+            font-weight: bold;
+            opacity: 0;
+            transition: 1s;
+            z-index: 3;
+        }
+
+        .name-popup.show {
+            opacity: 1;
+        }
+
+        /* CARD */
+        .card {
+            width: 410px;
+            height: 710px;
+            perspective: 2000px;
+        }
+
+        .inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.9s;
+        }
+
+        .card.open .inner {
+            transform: rotateY(180deg);
+        }
+
+        .side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .front {
+            background: linear-gradient(135deg, #610d70, #d615d6, #530463);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: rgb(197, 160, 24);
+            font-weight: bold;
+        }
+
+        .back {
+            background: linear-gradient(135deg, #56a7e4, #9e1f85);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-box {
+            height: 49%;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            height: 51%;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content p {
+            font-size: 16px;
+            color:#ffffff;
+            margin: 6px 0;
+        }
+
+        .highlight {
+            color: rgb(32, 125, 218);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="name-popup" id="name">En Thangamey💖</div>
+
+    <div class="card" onclick="openCard()">
+        <div class="inner">
+
+            <div class="side front">
+                Tap to Open 💝
+            </div>
+
+            <div class="side back">
+                <div class="img-box">
+                    <img src="CA.png">
+                </div>
+
+                <div class="content">
+                    <p>Kavya,
+                    உன் முகம் பார்க்கும் முன்பே<br>
+                    உன்னை ராசித்தவன் நான்…🌹<br>
+
+                    உன் முகம் பார்த்தப்பின்<br>
+                    கரைந்தவன் நான்…🫠</p>
+
+                    <p>Ivlo naal wait pannadhu… unna meet panna dhaan pola…
+
+                    Nama pesuna chat la content vida
+                    nee anupura ‘Oo’ message dhaan adhigam 😂
+                    aana enakku andha ‘Oo’ dhaan romba pudikkum…
+
+                    Un kooda pesina sila nimishangal kuda…
+                    enakku romba special ah feel aagudhu… simple ha sollanum na💖</p>
+
+                    <p class="highlight">Nee enakku romba mukkiyam
+                    En golden life la nee oru gem dii 😍</p>
+
+                    <p>Nee nee ya irukradhe enakku romba pidikkum 😄<br>
+                    Thanks for being you ❤️</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="music">
+        <source src="kavin.mp4" type="audio/mpeg">
+    </audio>
+
+    <script>
+        
+    // Hearts
+        for (let i = 0; i < 5; i++) {
+            let h = document.createElement('div');
+            h.innerHTML = '💖';
+            h.className = 'heart';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (5 + Math.random() * 5) + 's';
+            document.body.appendChild(h);}
+
+        // Flowers
+        function startFlowers() {
+            for (let i = 0; i < 6; i++) {
+                let f = document.createElement('div');
+                f.className = 'flower';
+                f.innerHTML = ['🌷','🌹'][Math.floor(Math.random()*2)];
+                f.style.left = Math.random() * 100 + 'vw';
+                f.style.animationDuration = (2 + Math.random() * 2) + 's';
+                document.body.appendChild(f);
+                setTimeout(() => f.remove(), 7000);
+            }
+        }
+
+        function showName() {
+            let n = document.getElementById('name');
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 3000);
+        }
+
+        function openCard() {
+            document.querySelector('.card').classList.toggle('open');
+            document.getElementById('music').play();
+            startFlowers();
+            showName();
+        }
+    </script>
+
+</body>
+</html>
